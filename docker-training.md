@@ -41,7 +41,8 @@ web:
       - elasticsearch
 
 ## database.ymlとcompose.yml
-```compose.yml
+compose.yml
+```
 services:
   db:
     ports:
@@ -51,7 +52,8 @@ services:
       DB_HOST: db # dbコンテナに接続するときは、コンテナ名だけで、ポート番号は記載不要
 ```
 
-```database.yml
+database.yml
+```
 development:
   primary:
     adapter: mysql2
