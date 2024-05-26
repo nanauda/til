@@ -40,6 +40,37 @@ web:
       - redis
       - elasticsearch
 
+## database.ymlとcompose.yml
+```compose.yml
+services:
+  db:
+    ports:
+      - "3306:3306"
+  web:
+    environment:
+      DB_HOST: db # dbコンテナに接続するときは、コンテナ名だけで、ポート番号は記載不要
+```
+
+```database.yml
+development:
+  primary:
+    adapter: mysql2
+    host: <%= ENV['DB_HOST'] || 'localhost' %>
+    port: <%= ENV['DB_PORT'] || 3306 %>
+```
+
+dockerコンテナを利用中の場合は、`compose.yml`の環境変数`DB_HOST` に`db`という値が入ってくるので、db:3306に接続する。
+dockerコンテナを利用していない場合は、localhost:3306のローカルのmysqlに接続される。
+この`3306`は3306:**3306**と一致している必要がある。
+
+ちなみに、ローカルで3306ポートが競合している場合などは、以下を3307に変えてもホスト側のポートを変えるだけなので、compose.yml、database.ymlは何も変えることなく動作する。
+```
+  db:
+    image: mysql:5.7.12
+    ports:
+      - "3307:3306"
+```
+
 ## コンテナ同士の通信
 - 例えばwebコンテナとdbコンテナが接続されているとする
     - 各々の定義にport: 80:8080 みたいに書かれているが、この数字はホストから接続するときにしか意識しない。
