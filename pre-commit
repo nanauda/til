@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# RuboCopのチェック
+git diff --diff-filter=ACMR --name-only *.rb | xargs bundle exec rubocop
+
+# RuboCopのステータスコードを確認
+if [ $? -ne 0 ]; then
+    echo "RuboCopのチェックに失敗しました。コミットを中止します。"
+    exit 1
+fi
