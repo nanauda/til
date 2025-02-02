@@ -1,0 +1,23 @@
+class Human {
+    constructor(private _firstName: string, private _lastName: string) {
+        // コンストラクタの引数にアクセス修飾子を付けることで、フィールドの定義が省略できる
+    }
+
+    public get fullName() : string {
+        return this._firstName + this._lastName
+    }
+
+    public set lastName (val: string) {
+     this._lastName = val
+    }
+  }
+  
+  const nanamiHuman = new Human("nana", "uda");
+
+  // getterの呼び出しは()無し
+  console.log(nanamiHuman.fullName);
+
+  // setterの呼び出し privateなので直接変更はできない
+  nanamiHuman.lastName = "new"
+
+  console.log(nanamiHuman.fullName);
